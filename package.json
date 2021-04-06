@@ -1,0 +1,17 @@
+{
+  "name": "packaging-scripts",
+  "version": "0.0.1",
+  "description": "Common packing",
+  "main": "index.js",
+  "bin": {
+    "packaging-scripts": "./bin/packaging-scripts.js"
+  },
+  "repository": "https://github.com/dengaye/packaging-scripts.git",
+  "author": "dengaye",
+  "license": "MIT",
+  "dependencies": {
+    "chalk": "^4.1.0",
+    "cross-spawn": "^7.0.3"
+  },
+  "type": "module"
+}
