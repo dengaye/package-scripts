@@ -1,10 +1,5 @@
 #!/usr/bin/env node
 
-process.on("unhandledRejection", (err) => {
-  console.log(err);
-  process.exit(1);
-});
-
 import chalk from "chalk";
 import spawn from "cross-spawn";
 import { createRequire } from "module";
@@ -13,6 +8,19 @@ import { createRequire } from "module";
 // ps: 为这里指定了 module type 为 ES6 module，不支持 CommonJS 的 require
 const require = createRequire(import.meta.url);
 const log = console.log;
+
+/**
+ * 捕捉未处理的 promise reject
+ */
+ process.on("unhandledRejection", (err) => {
+  log(err);
+  /***
+   * 退出状态 code，回强制进行尽快退出，及时还有尚未完成的一步操作在等待
+   * 默认 code 为 0 或 process.exitCode 的值（如果已设置）
+   */
+  process.exit(1);
+});
+
 /***
  * process.argv
  * 返回一个数组，其中包含当 Node.js 进程被启动时传入的命令参数
@@ -48,16 +56,7 @@ if (script) {
   );
 
   if (result.signal) {
-    if (result.signal === "SIGKILL") {
-      log(`The build failed because the process exited too early. 
-      This probably means the system ran out of memory or someone called 
-      'kill -9' on the process.`);
-    } else if (result.signal === "SIGTERM") {
-      log(`The build failed because the process exited too early. 
-      Someone might have called 'kill' or 'killall', or the system could 
-      be shutting down."
-      `);
-    }
+    log(chalk.red(result.signal));
     process.exit(1);
   }
   process.exit(result.status);
