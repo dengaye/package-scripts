@@ -1,13 +1,9 @@
 #!/usr/bin/env node
 
-import chalk from "chalk";
-import spawn from "cross-spawn";
-import { createRequire } from "module";
-
-//等同于 CommonJS  require.resolve，
-// ps: 为这里指定了 module type 为 ES6 module，不支持 CommonJS 的 require
-const require = createRequire(import.meta.url);
-const log = console.log;
+const chalk = require('chalk');
+const spawn = require('cross-spawn');
+const { createRequire } = require('module');
+const { log } = require('../utils/util');
 
 /**
  * 捕捉未处理的 promise reject

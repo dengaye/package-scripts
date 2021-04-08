@@ -6,5 +6,5 @@ yarn
 
 yarn link
 
-packaging-script start or packaging-script build
+package-scripts start or package-scripts build
 ```
