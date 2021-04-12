@@ -1,0 +1,12 @@
+{
+  "name": "simple",
+  "version": "1.0.0",
+  "description": "example",
+  "main": "index.js",
+  "license": "MIT",
+  "scripts": {
+    "start": "package-scripts start",
+    "build": "package-scripts build"
+  },
+  "dependencies": {}
+}

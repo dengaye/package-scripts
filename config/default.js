@@ -1,8 +1,19 @@
+const fs = require('fs');
 const path = require('path');
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
+const TsConfigPathsPlugin = require('tsconfig-paths-webpack-plugin');
+const StyleLintPlugin = require('stylelint-webpack-plugin');
 const { getAppPath } = require('../utils/util');
+
+let defaultrcBabelrcPath = getAppPath('.babelrc');
+
+try {
+  defaultrcBabelrcPath = fs.existsSync(defaultrcBabelrcPath) ? defaultrcBabelrcPath  : false;
+} catch(err) {
+  throw err;
+}
 
 const miniCssLoader = {
   loader: MiniCssExtractPlugin.loader,
@@ -30,10 +41,10 @@ const postCssLoader = {
   }
 }
 
-const defaultRuleConfig = [
+const getDefaultRuleConfig = (appPath) => [
   {
     test: /\.(tsx?|d.ts)$/,
-    include: [getAppPath('src')],
+    include: [getAppPath(`./${appPath}`)],
     use: [
       {
         loader: 'awesome-typescript-loader',
@@ -47,7 +58,7 @@ const defaultRuleConfig = [
   },
   {
     test: /\.(js|jsx|mjs)$/,
-    include: [getAppPath('src')],
+    include: [getAppPath(`./${appPath}`)],
     use: [
       'thread-loader',
       {
@@ -56,8 +67,7 @@ const defaultRuleConfig = [
           cacheDirectory: getAppPath('./.cache/.babel'),
           cacheCompression: false,
           compact: false,
-          configFile: getAppPath('.babelrc'),
-          fix: true,
+          configFile: defaultrcBabelrcPath,
         },
       },
     ],
@@ -65,7 +75,7 @@ const defaultRuleConfig = [
   },
   {
     test: /\.scss$/,
-    include: [getAppPath('./src')],
+    include: [getAppPath(`./${appPath}`)],
     use: [
       miniCssLoader,
       {
@@ -86,7 +96,7 @@ const defaultRuleConfig = [
   },
   {
     test: /\.css$/,
-    include: [getAppPath('src')],
+    include: [getAppPath(`./${appPath}`)],
     use: [
       miniCssLoader,
       {
@@ -97,20 +107,44 @@ const defaultRuleConfig = [
   },
   {
     test: /\.(png|jpg|svg|gif)$/,
-    include: [getAppPath('src')],
+    include: [getAppPath(`./${appPath}`)],
     use: ['file-loader'],
   },
 ]
 
-const defaultPluginsConfig = [
+const getDefaultPluginsConfig = (appPath) => [
   new CleanWebpackPlugin(),
   new HtmlWebpackPlugin({
-    template: getAppPath('./src/index.html'),
+    template: getAppPath(`./${appPath}/index.html`),
   }),
 ]
 
+const getDefaultTsConfig = () => {
+  return {
+    plugins: new TsConfigPathsPlugin({
+      configFile: getAppPath('./tsconfig.json'),
+      extensions: ['.ts', '.tsx', '.js', '.jsx'],
+      logLevel: 'INFO',
+      baseUrl: getAppPath('.'),
+      mainFields: ['browser', 'main'],
+    }),
+  }
+}
+
+const getStyleLintConfig = (stylelintConfigPath, appPath) => {
+  return {
+    plugins: new StyleLintPlugin({
+      configFile: getAppPath(stylelintConfigPath || `./stylelint.config.js`),
+      context: getAppPath(`./${appPath}`, ''),
+      failOnError: true,
+      quiet: false,
+    })
+  }
+}
 
 module.exports = {
-  defaultRuleConfig,
-  defaultPluginsConfig,
+  getDefaultPluginsConfig,
+  getDefaultTsConfig,
+  getStyleLintConfig,
+  getDefaultRuleConfig,
 }
