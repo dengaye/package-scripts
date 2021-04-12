@@ -1,15 +1,15 @@
 {
   "name": "packaging-scripts",
-  "version": "0.1.0",
+  "version": "0.1.3",
   "description": "Common packing",
-  "main": "./config/index.js",
+  "main": "index.js",
   "bin": {
     "package-scripts": "./bin/package-scripts.js"
   },
   "repository": "https://github.com/dengaye/packaging-scripts.git",
   "author": "dengaye",
   "license": "MIT",
-  "devDependencies": {
+  "dependencies": {
     "chalk": "^4.1.0",
     "clean-webpack-plugin": "^3.0.0",
     "cross-spawn": "^7.0.3",
