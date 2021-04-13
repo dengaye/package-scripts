@@ -23,7 +23,7 @@ const miniCssLoader = {
 };
 
 const postCssLoader = {
-  loader: 'postcss-loader',
+  loader: require.resolve('postcss-loader'),
   options: {
     postcssOptions: {
       plugins: [
@@ -47,7 +47,7 @@ const getDefaultRuleConfig = (appPath) => [
     include: [getAppPath(`./${appPath}`)],
     use: [
       {
-        loader: 'awesome-typescript-loader',
+        loader: require.resolve('awesome-typescript-loader'),
         options: {
           transpileOnly: false,
           fix: true,
@@ -60,9 +60,9 @@ const getDefaultRuleConfig = (appPath) => [
     test: /\.(js|jsx|mjs)$/,
     include: [getAppPath(`./${appPath}`)],
     use: [
-      'thread-loader',
+      require.resolve('thread-loader'),
       {
-        loader: 'babel-loader',
+        loader: require.resolve('babel-loader'),
         options: {
           cacheDirectory: getAppPath('./.cache/.babel'),
           cacheCompression: false,
@@ -79,7 +79,7 @@ const getDefaultRuleConfig = (appPath) => [
     use: [
       miniCssLoader,
       {
-        loader: 'css-loader',
+        loader: require.resolve('css-loader'),
         options: {
             modules: {
                 localIdentName: '[local]-[hash:base64:10]',
@@ -90,7 +90,7 @@ const getDefaultRuleConfig = (appPath) => [
       },
       postCssLoader,
       {
-        loader: 'sass-loader',
+        loader: require.resolve('sass-loader'),
       },
     ]
   },
@@ -100,7 +100,7 @@ const getDefaultRuleConfig = (appPath) => [
     use: [
       miniCssLoader,
       {
-        loader: 'css-loader',
+        loader: require.resolve('css-loader'),
       },
       postCssLoader,
     ],
@@ -108,7 +108,7 @@ const getDefaultRuleConfig = (appPath) => [
   {
     test: /\.(png|jpg|svg|gif)$/,
     include: [getAppPath(`./${appPath}`)],
-    use: ['file-loader'],
+    use: [require.resolve('file-loader')],
   },
 ]
 

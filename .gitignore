@@ -16,3 +16,4 @@ yarn.lock
 webpack-assets.json
 .idea
 .env
+examples/simple/.cache
