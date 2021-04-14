@@ -17,10 +17,10 @@ module.exports = (defaultrcConfig) => {
     devtool: 'cheap-module-source-map',
     devServer: {
       contentBase: getAppPath(appOutputRoot),
-      host: process.env.HOST || '0.0.0.0',
-      port: process.env.PORT || 9000,
-      sockHost: process.env.SOCK_HOST || '0.0.0.0',
-      sockPort: process.env.SOCK_PORT || 9000,
+      host: process.env.HOST,
+      port: process.env.PORT,
+      sockHost: process.env.SOCK_HOST,
+      sockPort: process.env.SOCK_PORT,
       disableHostCheck: true,
       historyApiFallback: true,
       liveReload: true,
@@ -30,7 +30,7 @@ module.exports = (defaultrcConfig) => {
       hot: true,
       writeToDisk: true,
       watchContentBase: true,
-      publicPath: '/',
+      publicPath: process.env.PUBLIC_PATH || '/',
       headers: {
           "Access-Control-Allow-Origin": "*",
       },

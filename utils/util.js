@@ -6,11 +6,13 @@ const clearConsole = () => {
 };
 
 const setDefaultEnv = () => {
-  if (!process.env.HOST) {
+  if (!process.env.HOST || !process.env.SOCK_HOST) {
     process.env.HOST = '0.0.0.0';
+    process.env.SOCK_HOST = '0.0.0.0';
   }
-  if (!process.env.PORT) {
+  if (!process.env.PORT || !process.env.SOCK_PORT) {
     process.env.PORT = 4090;
+    process.env.SOCK_PORT = 4090;
   }
 };
 
