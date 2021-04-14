@@ -1,9 +1,13 @@
 const fs = require('fs');
 const path = require('path');
 
+const clearConsole = () => {
+  process.stdout.write(process.platform === 'win32' ? '\x1B[2J\x1B[0f' : '\x1B[2J\x1B[3J\x1B[H');
+};
+
 const setDefaultEnv = () => {
   if (!process.env.HOST) {
-    process.env.HOST = "0.0.0.0";
+    process.env.HOST = '0.0.0.0';
   }
   if (!process.env.PORT) {
     process.env.PORT = 4090;
@@ -21,4 +25,5 @@ module.exports = {
   log,
   getAppRootPath,
   getAppPath,
-}
+  clearConsole,
+};

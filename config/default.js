@@ -27,14 +27,15 @@ const postCssLoader = {
   options: {
     postcssOptions: {
       plugins: [
+        require('postcss-flexbugs-fixes'),
         [
-          'postcss-flexbugs-fixes', {}
-        ],
-        [
-          'postcss-preset-env',
+          require('postcss-preset-env'),
           {
-            flexbox: 'no-2009',
-          }
+            autoprefixer: {
+              flexbox: 'no-2009',
+            },
+            stage: 3,
+          },
         ],
       ]
     }
