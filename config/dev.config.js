@@ -14,7 +14,7 @@ module.exports = (defaultrcConfig) => {
       publicPath: process.env.PUBLIC_PATH || '/',
     },
     mode: 'development',
-    devtool: 'cheap-module-source-map',
+    devtool: 'inline-source-map',
     devServer: {
       contentBase: getAppPath(appOutputRoot),
       host: process.env.HOST,

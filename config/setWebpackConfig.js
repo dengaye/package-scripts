@@ -35,9 +35,10 @@ const setWebpackConfig = (defaultrcConfig = {}) => {
     entry: appEnter || getAppPath(`./${appPath}/index.js`),
     output: {
       ...SplitConfig.output,
-      path: getAppPath(appOutputRoot),
+      path: getAppPath(`./${appOutputRoot}`),
     },
     mode: SplitConfig.mode,
+    devtool: SplitConfig.devtool,
     devServer: SplitConfig.devServer,
     module: {
       rules: [].concat(getDefaultRuleConfig(appPath)),
