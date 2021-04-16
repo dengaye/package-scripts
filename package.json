@@ -1,6 +1,6 @@
 {
   "name": "packaging-scripts",
-  "version": "0.1.4",
+  "version": "0.1.5",
   "description": "Common packing",
   "main": "index.js",
   "bin": {
