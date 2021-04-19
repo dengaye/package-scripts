@@ -2,20 +2,21 @@ const MiniCssExtactPlugin = require('mini-css-extract-plugin');
 const TerserPlugin = require('terser-webpack-plugin');
 const OptimizeCSSAssetsPlugin = require('optimize-css-assets-webpack-plugin');
 const safeParser = require('postcss-safe-parser');
+const { staticJsResPath, staticStyleResPath } = require('../utils/contants');
 
 module.exports = (defaultrcConfig) => {
   return {
     output: {
-      filename: '[name]-[chunkhash:8].js',
-      chunkFilename: '[name]-[chunkhash:8].js',
+      filename: `${staticJsResPath}/[name]-[chunkhash:8].js`,
+      chunkFilename: `${staticJsResPath}/[name]-[chunkhash:8].js`,
       publicPath: process.env.PUBLIC_PATH || '/',
     },
     mode: 'production',
     devtool: false,
     plugins: [
       new MiniCssExtactPlugin({
-        filename: '[name]-[chunkhash:8].css',
-        chunkFilename: '[name]-[chunkhash:8].css',
+        filename: `${staticStyleResPath}/[name]-[chunkhash:8].css`,
+        chunkFilename: `${staticStyleResPath}/[name]-[chunkhash:8].css`,
         ignoreOrder: true,
       }),
     ],

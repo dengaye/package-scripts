@@ -6,12 +6,13 @@ const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const TsConfigPathsPlugin = require('tsconfig-paths-webpack-plugin');
 const StyleLintPlugin = require('stylelint-webpack-plugin');
 const { getAppPath } = require('../utils/util');
+const { staticMediaResPath } = require('../utils/contants');
 
 let defaultrcBabelrcPath = getAppPath('.babelrc');
 
 try {
-  defaultrcBabelrcPath = fs.existsSync(defaultrcBabelrcPath) ? defaultrcBabelrcPath  : false;
-} catch(err) {
+  defaultrcBabelrcPath = fs.existsSync(defaultrcBabelrcPath) ? defaultrcBabelrcPath : false;
+} catch (err) {
   throw err;
 }
 
@@ -37,10 +38,10 @@ const postCssLoader = {
             stage: 3,
           },
         ],
-      ]
-    }
-  }
-}
+      ],
+    },
+  },
+};
 
 const getDefaultRuleConfig = (appPath) => [
   {
@@ -82,18 +83,18 @@ const getDefaultRuleConfig = (appPath) => [
       {
         loader: require.resolve('css-loader'),
         options: {
-            modules: {
-                localIdentName: '[local]-[hash:base64:10]',
-            },
-            localsConvention: 'camelCase',
-            importLoaders: 2,
+          modules: {
+            localIdentName: '[local]-[hash:base64:10]',
+          },
+          localsConvention: 'camelCase',
+          importLoaders: 2,
         },
       },
       postCssLoader,
       {
         loader: require.resolve('sass-loader'),
       },
-    ]
+    ],
   },
   {
     test: /\.css$/,
@@ -109,16 +110,24 @@ const getDefaultRuleConfig = (appPath) => [
   {
     test: /\.(png|jpg|svg|gif)$/,
     include: [getAppPath(`./${appPath}`)],
-    use: [require.resolve('file-loader')],
+    use: [
+      {
+        loader: require.resolve('url-loader'),
+        options: {
+          name: `${staticMediaResPath}/[name].[hash:8].[ext]`,
+          limit: 8192,
+        },
+      },
+    ],
   },
-]
+];
 
 const getDefaultPluginsConfig = (appPath) => [
   new CleanWebpackPlugin(),
   new HtmlWebpackPlugin({
     template: getAppPath(`./${appPath}/index.html`),
   }),
-]
+];
 
 const getDefaultTsConfig = () => {
   return {
@@ -129,8 +138,8 @@ const getDefaultTsConfig = () => {
       baseUrl: getAppPath('.'),
       mainFields: ['browser', 'main'],
     }),
-  }
-}
+  };
+};
 
 const getStyleLintConfig = (stylelintConfigPath, appPath) => {
   return {
@@ -139,13 +148,13 @@ const getStyleLintConfig = (stylelintConfigPath, appPath) => {
       context: getAppPath(`./${appPath}`, ''),
       failOnError: true,
       quiet: false,
-    })
-  }
-}
+    }),
+  };
+};
 
 module.exports = {
   getDefaultPluginsConfig,
   getDefaultTsConfig,
   getStyleLintConfig,
   getDefaultRuleConfig,
-}
+};
