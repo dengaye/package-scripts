@@ -2,6 +2,7 @@ const webpack = require('webpack');
 const path = require('path');
 const MiniCssExtactPlugin = require('mini-css-extract-plugin');
 const StyleLintPlugin = require('stylelint-webpack-plugin');
+const AssetsPlugin = require('assets-webpack-plugin');
 const { getAppPath } = require('../utils/util');
 
 module.exports = (defaultrcConfig) => {
@@ -32,7 +33,7 @@ module.exports = (defaultrcConfig) => {
       watchContentBase: true,
       publicPath: process.env.PUBLIC_PATH || '/',
       headers: {
-          "Access-Control-Allow-Origin": "*",
+        'Access-Control-Allow-Origin': '*',
       },
     },
     plugins: [
@@ -42,6 +43,24 @@ module.exports = (defaultrcConfig) => {
         chunkFilename: '[name].css',
         ignoreOrder: false,
       }),
+      new AssetsPlugin({
+        prettyPrint: true,
+        filename: 'assets.json',
+        path: getAppPath(appOutputRoot),
+      }),
     ],
+    optimization: {
+      splitChunks: {
+        chunks: 'all',
+        cacheGroups: {
+          vendors: {
+            test: /[\\/]node_modules[\\/]/,
+            chunks: 'all',
+            enforce: true,
+            name: 'vendors',
+          },
+        },
+      },
+    },
   };
-}
+};

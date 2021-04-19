@@ -39,6 +39,7 @@ const setWebpackConfig = (defaultrcConfig = {}) => {
     },
     mode: SplitConfig.mode,
     devtool: SplitConfig.devtool,
+    optimization: SplitConfig.optimization,
     devServer: SplitConfig.devServer,
     module: {
       rules: [].concat(getDefaultRuleConfig(appPath)),
