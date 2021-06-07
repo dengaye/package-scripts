@@ -8,5 +8,7 @@
     "start": "package-scripts start",
     "build": "package-scripts build"
   },
-  "dependencies": {}
+  "dependencies": {
+    "lodash": "^4.17.21"
+  }
 }

@@ -15,6 +15,7 @@ const setWebpackConfig = (defaultrcConfig = {}) => {
     appOutputRoot = 'dist',
     useDefaultTsConfig,
     stylelintConfig,
+    appExtensions = {}
   } = defaultrcConfig;
   const getSplitConfig = DEV ? require('./dev.config') : require('./prod.config');
   const defaultResolvePlugins = [];
@@ -55,7 +56,10 @@ const setWebpackConfig = (defaultrcConfig = {}) => {
       ...SplitConfig.plugins,
       ...defaultrcPlugins,
     ],
-  }
+    externals: {
+      ...appExtensions,
+    },
+  };
 };
 
 module.exports = setWebpackConfig;

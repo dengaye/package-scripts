@@ -1,3 +1,11 @@
 {
-  "appEnter": "./src/index.js"
+  "appEnter": "./src/index.js",
+  "appExtensions": {
+    "lodash": {
+      "commonjs": "lodash",
+      "commonjs2": "lodash",
+      "amd": "lodash",
+      "root": "_"
+    }
+  }
 }

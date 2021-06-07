@@ -1,0 +1,16 @@
+{
+  "name": "micro",
+  "version": "1.0.0",
+  "description": "micro-frontend",
+  "main": "index.js",
+  "scripts": {
+    "start": "package-scripts start",
+    "build": "package-scripts build"
+  },
+  "repository": "https://github.com/dengaye/micro.git",
+  "license": "MIT",
+  "dependencies": {},
+  "devDependencies": {
+    "packaging-scripts": "^0.1.8"
+  }
+}
