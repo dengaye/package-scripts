@@ -4,7 +4,7 @@
   "description": "Common packing",
   "main": "index.js",
   "bin": {
-    "package-scripts": "./bin/package-scripts.js"
+    "packaging-scripts": "./bin/package-scripts.js"
   },
   "repository": "https://github.com/dengaye/packaging-scripts.git",
   "author": "dengaye",
@@ -12,7 +12,7 @@
   "dependencies": {
     "assets-webpack-plugin": "5.1.2",
     "awesome-typescript-loader": "5.2.1",
-    "babel-loader": "8.0.4",
+    "babel-loader": "8.2.2",
     "chalk": "4.1.0",
     "clean-webpack-plugin": "3.0.0",
     "cross-spawn": "7.0.3",
@@ -34,10 +34,10 @@
     "terser-webpack-plugin": "4.2.3",
     "thread-loader": "3.0.0",
     "tsconfig-paths-webpack-plugin": "3.3.0",
+    "typescript": "3.7.5",
     "url-loader": "4.1.1",
     "webpack": "4.43.0",
     "webpack-cli": "3.3.11",
-    "webpack-dev-server": "3.11.0",
-    "typescript": "3.7.5"
+    "webpack-dev-server": "3.11.0"
   }
 }
