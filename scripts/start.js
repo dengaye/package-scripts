@@ -43,21 +43,24 @@ const start = () => {
     const devServerOptions = Object.assign(
       {},
       webpackConfig.devServer,
-      { open: false }
+      { open: false, port: PORT, host: HOST,  }
     );
-    const devServer = new WebpackDevServer(compiler, devServerOptions);
+    const devServer = new WebpackDevServer(devServerOptions, compiler);
 
-    devServer.listen(PORT, HOST, err => {
-      if (err) {
-        return console.error(err);
+    const startServer = async() => {
+      try {
+        // v5 https://webpack.js.org/api/webpack-dev-server/#start
+        await devServer.start();
+        if (isInteractive) {
+          clearConsole();
+        }
+        log(chalk.cyan('Starting the development server...\n'));
+      } catch (err) {
+        console.error(err);
       }
-  
-      if (isInteractive) {
-        clearConsole();
-      }
+    };
 
-      log(chalk.cyan('Starting the development server...\n'));
-    });
+    startServer();
 
     ['SIGINT', 'SIGTERM'].forEach(function (sig) {
       process.on(sig, function () {

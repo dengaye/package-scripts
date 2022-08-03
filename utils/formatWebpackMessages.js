@@ -66,13 +66,6 @@ function formatMessage(message) {
     ];
   }
 
-  // Add helpful message for users trying to use Sass for the first time
-  if (lines[1] && lines[1].match(/Cannot find module.+node-sass/)) {
-    lines[1] = 'To import Sass files, you first need to install node-sass.\n';
-    lines[1] +=
-      'Run `npm install node-sass` or `yarn add node-sass` inside your workspace.';
-  }
-
   lines[0] = chalk.inverse(lines[0]);
 
   message = lines.join('\n');
@@ -100,10 +93,10 @@ function formatMessage(message) {
 
 function formatWebpackMessages(json) {
   const formattedErrors = json.errors.map(function (message) {
-    return formatMessage(message, true);
+    return formatMessage(message.message, true);
   });
   const formattedWarnings = json.warnings.map(function (message) {
-    return formatMessage(message, false);
+    return formatMessage(message.message, false);
   });
   const result = {
     errors: formattedErrors,
@@ -116,4 +109,7 @@ function formatWebpackMessages(json) {
   return result;
 }
 
-module.exports = formatWebpackMessages;
+module.exports = {
+  formatMessage,
+  formatWebpackMessages
+}

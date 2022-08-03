@@ -18,9 +18,6 @@ try {
 
 const miniCssLoader = {
   loader: MiniCssExtractPlugin.loader,
-  options: {
-    hmr: process.env.NODE_ENV === 'development',
-  },
 };
 
 const postCssLoader = {
@@ -45,21 +42,7 @@ const postCssLoader = {
 
 const getDefaultRuleConfig = (appPath) => [
   {
-    test: /\.(tsx?|d.ts)$/,
-    include: [getAppPath(`./${appPath}`)],
-    use: [
-      {
-        loader: require.resolve('awesome-typescript-loader'),
-        options: {
-          transpileOnly: false,
-          fix: true,
-        },
-      },
-    ],
-    exclude: /node_modules/,
-  },
-  {
-    test: /\.(js|jsx|mjs)$/,
+    test: /\.(js|mjs|jsx|ts|tsx)$/,
     include: [getAppPath(`./${appPath}`)],
     use: [
       require.resolve('thread-loader'),
@@ -85,8 +68,8 @@ const getDefaultRuleConfig = (appPath) => [
         options: {
           modules: {
             localIdentName: '[local]-[hash:base64:10]',
+            exportLocalsConvention: 'camelCase',
           },
-          localsConvention: 'camelCase',
           importLoaders: 2,
         },
       },

@@ -6,7 +6,8 @@ const chalk = require('chalk');
 const webpack = require('webpack');
 const { log } = require('../utils/util');
 const webpackConfig = require('../config/index');
-
+const { formatMessage } = require('../utils/formatWebpackMessages');
+ 
 const build = async () => {
   log(chalk.green('Creating an optimized production build...'));
 
@@ -27,7 +28,10 @@ const build = async () => {
       }
 
       if (stats.hasWarnings()) {
-        console.warn(info.warnings);
+        info.warnings.forEach(warningInfo => {
+          const warningMsg = formatMessage(warningInfo.message, false);
+          log(chalk.yellow(warningMsg));
+        })
       }
       resolve('Compiled successfully.')
     })
@@ -37,5 +41,5 @@ const build = async () => {
 build().then(msg => {
   log(chalk.green(`${msg}`));
 }).catch(error => {
-  log(chalk.red(`${error}`));
+  log(chalk.red(`${error[0].message}`));
 });

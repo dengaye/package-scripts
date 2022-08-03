@@ -2,7 +2,7 @@
 
 const chalk = require('chalk');
 const { log, clearConsole } = require('./util');
-const formatWebpackMessages = require('./formatWebpackMessages');
+const { formatWebpackMessages } = require('./formatWebpackMessages');
 
 const isInteractive = process.stdout.isTTY;
 

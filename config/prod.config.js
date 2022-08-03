@@ -1,6 +1,6 @@
 const MiniCssExtactPlugin = require('mini-css-extract-plugin');
 const TerserPlugin = require('terser-webpack-plugin');
-const OptimizeCSSAssetsPlugin = require('optimize-css-assets-webpack-plugin');
+const CssMinimizerPlugin = require("css-minimizer-webpack-plugin");
 const safeParser = require('postcss-safe-parser');
 const { staticJsResPath, staticStyleResPath } = require('../utils/contants');
 
@@ -21,7 +21,7 @@ module.exports = (defaultrcConfig) => {
       }),
     ],
     optimization: {
-      moduleIds: 'hashed',
+      moduleIds: 'deterministic',
       minimizer: [
         new TerserPlugin({
           // 是否将注释剥离到单独的文件中，默认情况下，仅剥离 /^\**!|@preserve|@license|@cc_on/i 正则表达式匹配的注释
@@ -46,13 +46,18 @@ module.exports = (defaultrcConfig) => {
             },
           },
         }),
-        new OptimizeCSSAssetsPlugin({
-          cssProcessorOptions: {
-            parser: safeParser,
-            discardComments: {
-              removeAll: true,
-            },
-          },
+        // '...',
+        new CssMinimizerPlugin({
+          minimizerOptions: {
+            // processorOptions: {
+            //   parser: safeParser,
+            //   map: false,
+            // },
+            preset: ['default', {
+              discardComments: { removeAll: true },
+              minifyFontValues: { removeQuotes: false }
+            }]
+          }    
         }),
       ],
       // 会为每个入口添加一个只含有 runtime 的额外 chunk
